@@ -1,0 +1,26 @@
+:root {
+  /* --clr1: rgb(96, 107, 91);
+  --clr2: rgb(120, 99, 110);
+
+  --clrbg: rgb(153, 166, 149);
+  --clr1bg: rgb(153, 166, 149);
+  --clr1bg-light: rgb(205, 221, 200);
+  --clr2bg: rgb(233, 206, 221);
+  --clr2bg-light: rgb(253, 236, 246);
+
+  --gray1: rgb(240, 240, 240);
+  --gray2: rgb(155, 155, 155);
+  --gray3: rgb(44, 44, 44); */
+  --clr1: rgb(108, 126, 150); /* Stronger Dusty Blue */
+  --clr2: rgb(143, 113, 140); /* Deeper Muted Lavender */
+  
+  --clrbg: rgb(202, 212, 225); /* Richer Blue-Gray */
+  --clr1bg: rgb(202, 212, 225); /* Richer Blue-Gray */
+  --clr1bg-light: rgb(220, 230, 240); /* Slightly Deeper Sky Blue */
+  --clr2bg: rgb(215, 192, 214); /* Stronger Soft Lilac */
+  --clr2bg-light: rgb(240, 225, 238); /* Slightly Deeper Lilac Whisper */
+  
+  --gray1: rgb(235, 240, 245); /* Light Gray-Blue */
+  --gray2: rgb(170, 175, 190); /* Stronger Medium Gray */
+  --gray3: rgb(85, 90, 100); /* Darker Steel Gray */
+}
