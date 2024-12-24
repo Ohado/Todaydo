@@ -1,29 +1,27 @@
-const { useState } = React
+const { useEffect, useState } = React
 const { Link, NavLink } = ReactRouterDOM
 const { useNavigate } = ReactRouter
+const { useSelector } = ReactRedux
 
 import { userService } from '../services/user.service.js'
 import { UserMsg } from "./UserMsg.jsx"
 import { LoginSignup } from './LoginSignup.jsx'
 import { showErrorMsg } from '../services/event-bus.service.js'
-
+import { login, logout } from '../store/actions/user.actions.js'
 
 export function AppHeader() {
     const navigate = useNavigate()
-    const [user, setUser] = useState(userService.getLoggedinUser())
+
+    const user = useSelector(storeState => storeState.userModule.loggedUser)
+    console.log(user)
     
     function onLogout() {
-        userService.logout()
-            .then(() => {
-                onSetUser(null)
-            })
-            .catch((err) => {
-                showErrorMsg('OOPs try again')
-            })
+        logout()
+        .catch((err) => showErrorMsg(`Can't log out! Please try again later`))
     }
 
     function onSetUser(user) {
-        setUser(user)
+        login(user)
         navigate('/')
     }
     return (
@@ -31,9 +29,10 @@ export function AppHeader() {
             <section className="header-container">
                 <h1>React Todo App</h1>
                 {user ? (
-                    < section >
+                    < section className='user-data'>
 
                         <Link to={`/user/${user._id}`}>Hello {user.fullname}</Link>
+                        <div>Your balance is {user.balance}</div>
                         <button onClick={onLogout}>Logout</button>
                     </ section >
                 ) : (
@@ -52,3 +51,5 @@ export function AppHeader() {
         </header>
     )
 }
+
+

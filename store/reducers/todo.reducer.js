@@ -1,7 +1,4 @@
 import { todoService } from "../../services/todo.service.js"
-import { userService } from "../../services/user.service.js"
-
-const {useSearchParams} = ReactRouterDOM
 
 export const SET_FILTER = 'SET_FILTER'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
@@ -22,7 +19,6 @@ const initialState = {
 
 export function todoReducer(state = initialState, cmd = {}) {
     console.log('dispatching ' + cmd.type);
-    console.log(cmd);
     switch(cmd.type){
         case SET_IS_LOADING:
             return {
@@ -40,7 +36,6 @@ export function todoReducer(state = initialState, cmd = {}) {
                 todos: state.todos.filter(todo => todo._id !== cmd.todoId),
             }
         case SET_TODOS:
-            console.log('cmd: ' + cmd);
             return {
                 ...state,
                 prevTodos: [...state.todos],
@@ -66,7 +61,6 @@ export function todoReducer(state = initialState, cmd = {}) {
         default:
             return state
     }
-    // currentFilterBy = todoService.getFilterFromSearchParams(useSearchParams())
 }
 
 

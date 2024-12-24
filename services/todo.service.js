@@ -22,17 +22,21 @@ window.cs = todoService
 function query(filterBy = {}) {
     return storageService.query(TODO_KEY)
     .then(todos => {
-            if (filterBy.txt) {
-                const regExp = new RegExp(filterBy.txt, 'i')
-                todos = todos.filter(todo => regExp.test(todo.txt))
-            }
-            
-            if (filterBy.importance) {
-                todos = todos.filter(todo => todo.importance >= filterBy.importance)
-            }
-            
-            return todos
-        })
+        if (filterBy.txt) {
+            const regExp = new RegExp(filterBy.txt, 'i')
+            todos = todos.filter(todo => regExp.test(todo.txt))
+        }
+        
+        if (filterBy.importance) {
+            todos = todos.filter(todo => todo.importance >= filterBy.importance)
+        }
+
+        if (filterBy.isDone != undefined) {
+            todos = todos.filter(todo => todo.isDone === filterBy.isDone)
+        }
+        
+        return todos
+    })
 }
 
 function get(todoId) {

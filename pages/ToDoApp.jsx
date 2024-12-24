@@ -3,6 +3,7 @@ import { TodoList } from "../cmps/TodoList.jsx"
 import { DataTable } from "../cmps/data-table/DataTable.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { loadTodos, setDefaultFilter, removeTodo, toggleTodo, setFilter, changeColor } from "../store/actions/todo.actions.js"
+import { addToBalance } from "../store/actions/user.actions.js"
 
 const { useState, useEffect } = React
 const { Link, useSearchParams } = ReactRouterDOM
@@ -13,6 +14,7 @@ export function TodoApp() {
     // Special hook for accessing search-params:
     // const [todos, setTodos] = useState(null)
     const todos = useSelector(storeState => storeState.todoModule.todos)
+    const user = useSelector(storeState => storeState.userModule.loggedUser)
     
     // HOW TO DO SEARCH PARAMS?
     // const [searchParams, setSearchParams] = useSearchParams()
@@ -24,8 +26,6 @@ export function TodoApp() {
 
     useEffect(() => {
         loadTodos()
-        // todoService.query(filterBy)
-            .then(()=>{console.log("done")})
             .catch(err => {
                 console.error('Cannot load todos:', err)
                 showErrorMsg('Cannot load todos')
@@ -39,17 +39,20 @@ export function TodoApp() {
                     showSuccessMsg(`Todo removed`)
                 })
                 .catch(err => {
-                    showErrorMsg('Cannot remove todo ' + todoId)
+                    showErrorMsg('Cannot remove todo ' + todo.description)
                 })
     }
 
     async function onToggleTodo(todo) {
         toggleTodo(todo)
-            .then((savedTodo) => {
-                showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done' : 'back on your list'}`)
+        .then((savedTodo) => {
+                if(savedTodo.isDone)
+                    addToBalance(user, 10)
+                showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done. You just won 10 credits!' : 'back on your list'}`)
             })
             .catch(err => {
                 showErrorMsg('Cannot toggle todo "' + todo.description + '"')
+                throw(err)
             })
     }
 

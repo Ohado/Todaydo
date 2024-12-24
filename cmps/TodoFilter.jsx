@@ -18,11 +18,19 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
             case 'range':
                 value = +value || ''
                 break
-
+                    
             case 'checkbox':
                 value = target.checked
                 break
-
+                        
+            case 'select-one':
+                if(value === ''){
+                    value = undefined
+                }
+                else {
+                    value = value === 'true'
+                }
+                break
             default: break
         }
 
@@ -43,10 +51,21 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
                 <input value={txt} onChange={handleChange}
                     type="search" placeholder="By Txt" id="txt" name="txt"
                 />
-                <label htmlFor="importance">Importance: </label>
-                <input value={importance} onChange={handleChange}
-                    type="number" placeholder="By Importance" id="importance" name="importance"
-                />
+                <div>
+                    <label htmlFor="importance">Importance: </label>
+                    <input value={importance} onChange={handleChange}
+                        type="number" placeholder="By Importance" id="importance" name="importance"
+                    />
+                </div>
+                <div>
+                    
+                    <label htmlFor="todoState">Show:</label>
+                    <select name="isDone" id="todoState" onChange={handleChange}>
+                        <option value="">All</option>
+                        <option value="false">Active</option>
+                        <option value="true">Done</option>
+                    </select>
+                </div>
 
                 <button hidden>Set Filter</button>
             </form>
