@@ -3,17 +3,16 @@ const { Link, NavLink } = ReactRouterDOM
 const { useNavigate } = ReactRouter
 const { useSelector } = ReactRedux
 
-import { userService } from '../services/user.service.js'
 import { UserMsg } from "./UserMsg.jsx"
 import { LoginSignup } from './LoginSignup.jsx'
 import { showErrorMsg } from '../services/event-bus.service.js'
 import { login, logout } from '../store/actions/user.actions.js'
+import { styleService } from "../services/style.service.js"
 
 export function AppHeader() {
     const navigate = useNavigate()
 
     const user = useSelector(storeState => storeState.userModule.loggedUser)
-    console.log(user)
     
     function onLogout() {
         logout()
@@ -22,6 +21,7 @@ export function AppHeader() {
 
     function onSetUser(user) {
         login(user)
+        styleService.updateStyle(user.prefs)
         navigate('/')
     }
     return (

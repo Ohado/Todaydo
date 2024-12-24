@@ -1,4 +1,4 @@
-const { useRef, useState } = React
+const { useRef, useState, useEffect } = React
 const { Outlet, NavLink } = ReactRouterDOM
 // const { PropTypes } = PropTypes
 
@@ -9,6 +9,10 @@ import { AboutVision } from '../cmps/AboutVision.jsx'
 export function About() {
     const titleRef = useRef()
     const count = 1000001
+
+    useEffect(() => {
+        document.title = 'About Us';
+    })
 
     function onViewMore() {
         alert('curiosity killed the cat')

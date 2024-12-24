@@ -1,10 +1,13 @@
-import { ToggleButton } from "../cmps/ToggleButton.jsx"
+
+const { useState, useEffect } = React
 
 // This one Made with AI
-const { useState } = React
-
 export function Home() {
     
+    useEffect(()=> {
+        document.title = 'Tododay';
+    })
+
     return (
         <section className="home">
             <section className="hero">

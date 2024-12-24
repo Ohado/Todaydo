@@ -9,6 +9,7 @@ import { storageService } from "./async-storage.service.js"
 //     updatedAt: 1711490430999,
 //     balance: 10000, 
 //     activities: [{txt: 'Added a Todo', at: 1523873242735}]
+//     prefs: {color: 'black', bgColor: 'white'}
 // }
 
 export const userService = {
@@ -20,6 +21,8 @@ export const userService = {
     query,
     getEmptyCredentials,
     setBalance,
+    setPrefs,
+    changeUser,
 }
 const STORAGE_KEY_LOGGEDIN = 'user'
 const STORAGE_KEY = 'userDB'
@@ -41,11 +44,12 @@ function login({ username, password }) {
         })
 }
 
-function signup({ username, password, fullname, balance, }) {
-    const user = { username, password, fullname, balance, }
+function signup({ username, password, fullname, }) {
+    const user = { username, password, fullname, }
     user.createdAt = user.updatedAt = Date.now()
     user.activities = [{txt: 'User Created', at: user.createdAt}]
     user.balance = 0
+    user.prefs = {}
     console.log(user)
 
     return storageService.post(STORAGE_KEY, user)
@@ -62,10 +66,17 @@ function getLoggedinUser() {
 }
 
 function setBalance(user, newBalance, Adidas="just thought it's funny") {
-    _ChangeUser({...user, balance:newBalance})
+    ChangeUser({...user, balance:newBalance})
 }
 
-function _ChangeUser(user) {
+function setPrefs(user, newPrefs){
+    for(const pref in newPrefs){
+        user.prefs[pref] = newPrefs[pref]
+    }
+    changeUser(user)
+}
+
+function changeUser(user) {
     if (user._id) {
         // TODO - updatable fields
         user.updatedAt = Date.now()
@@ -77,7 +88,7 @@ function _ChangeUser(user) {
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance }
+    const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance, prefs: user.prefs }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
     return userToSave
 }
@@ -88,7 +99,8 @@ function getEmptyCredentials() {
         username: '',
         password: '',
         balance: 0,
-        activities: []
+        activities: [],
+        prefs: {}
     }
 }
 

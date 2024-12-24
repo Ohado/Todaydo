@@ -8,6 +8,7 @@ export function Dashboard() {
     const [importanceStats, setImportanceStats] = useState([])
 
     useEffect(()=>{
+        document.title = 'Dashboard';
         todoService.query()
             .then(setTodos)
         todoService.getImportanceStats()

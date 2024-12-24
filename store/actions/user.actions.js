@@ -18,6 +18,19 @@ export function login(user){
     store.dispatch({type: LOG_IN, user: user})
 }
 
+export function getUserById(userId){
+    return userService.getById(userId)
+}
+
+export function updateUser(user){
+    store.dispatch({type: SET_USER, user: user})
+    return userService.changeUser(user)
+}
+
+export function getLoggedinUser(){
+    return userService.getLoggedinUser()
+}
+
 export function addToBalance(user, toAdd) {
     const userToSave = {...user, balance: user.balance + toAdd}
     store.dispatch({type: SET_USER, user: userToSave})

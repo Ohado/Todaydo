@@ -4,7 +4,8 @@ export const utilService = {
     getRandomIntInclusive,
     loadFromStorage,
     saveToStorage,
-    animateCSS
+    animateCSS,
+    millisecondsToDateString
 }
 
 function makeId(length = 6) {
@@ -57,4 +58,10 @@ function animateCSS(el, animation='bounce') {
 
         el.addEventListener('animationend', handleAnimationEnd, { once: true })
     })
+}
+
+function millisecondsToDateString(ms){
+    const d = new Date(0)
+    d.setMilliseconds(ms)
+    return '' + d.getDate() + '.' + (d.getMonth()+1) + '.' + d.getFullYear()
 }

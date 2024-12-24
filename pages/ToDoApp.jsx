@@ -5,11 +5,12 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { loadTodos, setDefaultFilter, removeTodo, toggleTodo, setFilter, changeColor } from "../store/actions/todo.actions.js"
 import { addToBalance } from "../store/actions/user.actions.js"
 
-const { useState, useEffect } = React
+const { useState, useEffect,useRef } = React
 const { Link, useSearchParams } = ReactRouterDOM
 const { useSelector } = ReactRedux
 
 export function TodoApp() {
+    const todoIndexRef = useRef()
 
     // Special hook for accessing search-params:
     // const [todos, setTodos] = useState(null)
@@ -25,6 +26,7 @@ export function TodoApp() {
     // setDefaultFilter(useSearchParams())
 
     useEffect(() => {
+        document.title = 'Todo List';
         loadTodos()
             .catch(err => {
                 console.error('Cannot load todos:', err)
@@ -65,9 +67,13 @@ export function TodoApp() {
         setFilter(filterBy)
     }
 
+    useEffect(()=>{
+        todoIndexRef.current.style["--color-bg"] = 'red'
+    },[])
+
     if (!todos) return <div>Loading...</div>
     return (
-        <section className="todo-index">
+        <section ref={todoIndexRef} className="todo-index" >
             <TodoFilter filterBy={filterBy} onSetFilterBy={onSetFilter} />
             <div>
                 <Link to="/todo/edit" className="btn" >Add Todo</Link>

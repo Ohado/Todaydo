@@ -17,7 +17,10 @@ export function TodoEdit() {
 
     function loadTodo() {
         todoService.get(params.todoId)
-            .then(setTodoToEdit)
+            .then((todo) =>{
+                setTodoToEdit(todo);
+                document.title = 'Edit Todo: ' + todo.txt + (todo.isDone ? ' (done)' : '');
+            })
             .catch(err => console.log('err:', err))
     }
 
